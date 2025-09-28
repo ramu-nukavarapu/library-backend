@@ -14,6 +14,9 @@ func main() {
 		AppName: "Library API",
 	})
 
+	// Auth routes
+	AuthHandlers(app.Group("/auth"), db)
+
 	// Start the server
 	log.Fatal(app.Listen(":3000"))
 }
