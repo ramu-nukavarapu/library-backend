@@ -5,6 +5,8 @@ go 1.24.2
 require (
 	github.com/glebarez/sqlite v1.11.0
 	github.com/gofiber/fiber/v2 v2.52.9
+	github.com/golang-jwt/jwt/v5 v5.3.0
+	golang.org/x/crypto v0.14.0
 	gorm.io/gorm v1.31.0
 )
 
