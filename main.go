@@ -20,6 +20,9 @@ func main() {
 	// To protect routes, create a auth middleware
 	protected := app.Use(AuthMiddleware(db))
 
+	// Book routes, these routes are protected. Requires a valid JWT
+	BookHandlers(protected.Group("/book"), db)
+
 	// Start the server
 	log.Fatal(app.Listen(":3000"))
 }
