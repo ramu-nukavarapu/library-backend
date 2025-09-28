@@ -23,6 +23,9 @@ func main() {
 	// Book routes, these routes are protected. Requires a valid JWT
 	BookHandlers(protected.Group("/book"), db)
 
+	// Downloads the books as either CSV format or JSON format
+	DownloadHandler(protected.Group("/download"), db)
+
 	// Start the server
 	log.Fatal(app.Listen(":3000"))
 }
