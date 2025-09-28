@@ -76,4 +76,34 @@ func BookHandlers(route fiber.Router, db *gorm.DB) {
 		}
 		return c.Status(fiber.StatusOK).JSON(book)
 	})
+
+	route.Put("/:id", func(c *fiber.Ctx) error {
+		bookId, err := c.ParamsInt("id")
+		if err != nil {
+			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+				"error": err.Error(),
+			})
+		}
+		userId := c.Locals("userId").(int)
+		book := new(Book)
+
+		if err := db.Where("id = ? AND userId = ?", bookId, userId).First(&book).Error; err != nil {
+			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+				"error": "book not found.",
+			})
+		}
+
+		if err := c.BodyParser(book); err != nil {
+			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+				"error": err.Error(),
+			})
+		}
+
+		if err := db.Save(&book).Error; err != nil {
+			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+				"error": err.Error(),
+			})
+		}
+		return c.Status(fiber.StatusOK).JSON(book)
+	})
 }
