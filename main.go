@@ -17,6 +17,9 @@ func main() {
 	// Auth routes
 	AuthHandlers(app.Group("/auth"), db)
 
+	// To protect routes, create a auth middleware
+	protected := app.Use(AuthMiddleware(db))
+
 	// Start the server
 	log.Fatal(app.Listen(":3000"))
 }
